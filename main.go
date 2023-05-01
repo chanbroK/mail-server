@@ -1,11 +1,17 @@
 package main
 
+import (
+	"github.com/mail-server/router"
+	"net/http"
+)
+
 func main() {
-	//if err := server.RunServer(); err != nil {
-	//	for _, e := range errors.Unwrap(err) {
-	//
-	//	}
-	//	fmt.Fprintf(os.Stderr, "%v\n", err)
-	//	os.Exit(1)
-	//}
+	mux := http.NewServeMux()
+
+	mux.Handle("/mail", router.NewMailRouter())
+
+	err := http.ListenAndServe(":8080", mux)
+	if err != nil {
+		panic(err)
+	}
 }
